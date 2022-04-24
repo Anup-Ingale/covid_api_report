@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Covid Latest Report - {{ current_date }}</title>
+
+    <!-- Styling Table Block -->
+         <style>
+            .danger:hover {
+               background-color: red;
+                color: black;
+            }
+            .success:hover {
+               background-color: greenyellow;
+                color: black;
+            }
+        </style>
+    <!-- End of Styling Table Block -->
+
+    <!-- Start CSS  Block -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
+    <!-- End CSS Block -->
+
+    <!-- Start Script Block -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- End Script Block -->
+
+    <!-- Start Datatable CDN Block -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- End Datatable CDN Block -->
+
+    <!-- Datatable Script Configurations -->
+        <script>
+            $(document).ready(function () {
+                var table = $('#example').DataTable({
+                    responsive: true
+                });
+                new $.fn.dataTable.FixedHeader(table);
+            });
+        </script>
+    <!-- End Datatable Script Configurations -->
+
+
+
+</head>
+<body>
+    <!-- Start Card Block -->
+        <div class="container-fluid mx-2 mt-5">
+        <h2 class="text-center font-weight-bold">GLOBAL CASES OF COVID</h2>
+        <hr>
+        <div class="row p-3 mx-3 justify-content-center">
+            {% for global in global_list %}
+                <div class="card text-white bg-primary mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header text-center">New Confirmed</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ global.NewConfirmed}}</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                <div class="card text-white bg-secondary mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header text-center">New Death</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ global.NewDeaths }}</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                <div class="card text-white bg-danger mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header text-center">Total Death</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ global.TotalDeaths }}</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                <div class="card text-white bg-success mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header text-center">New Recovered</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ global.NewRecovered }}</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                <div class="card text-white bg-info mb-3 mx-3" style="max-width: 18rem;">
+                    <div class="card-header text-center">Total Recovered</div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ global.TotalRecovered }}</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            {% endfor %}
+            <h5 class="main-header text-center mt-2 font-weight-bolder"> Report Generated on : {{ current_date }}</h5>
+        </div>
+        <hr>
+    </div>
+    <!-- End Card Block -->
+
+    <!-- Start Table Block -->
+        <div class="container-fluid w-100 table-responsive mt-5">
+            <h2 class="text-center font-weight-bold">TABLE REPORT</h2>
+            <hr>
+                <table id="example" class="table table-striped table-bordered nowrap text-center" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Country Name</th>
+                        <th>Country Code</th>
+                        <th>Country Slug</th>
+                        <th>New Confirmed</th>
+                        <th>Total Confirmed</th>
+                        <th>New Deaths</th>
+                        <th>Total Deaths</th>
+                        <th>New Recovered</th>
+                        <th>Total Recovered</th>
+                        <th>Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in country_list %}
+                        <tr>
+                            <td class="success">{{ c.Country }}</td>
+                            <td class="success">{{ c.CountryCode }}</td>
+                            <td class="success">{{ c.Slug }}</td>
+                            <td class="success">{{ c.NewConfirmed }}</td>
+                            <td class="success">{{ c.TotalConfirmed}}</td>
+                            <td class="danger">{{ c.NewDeaths }}</td>
+                            <td class="danger">{{ c.TotalDeaths }}</td>
+                            <td class="success">{{ c.NewRecovered }}</td>
+                            <td class="success">{{c.TotalRecovered}}</td>
+                            <td class="success">{{ c.Date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                       <th>Country Name</th>
+                        <th>Country Code</th>
+                        <th>Country Slug</th>
+                        <th>New Confirmed</th>
+                        <th>Total Confirmed</th>
+                        <th>New Deaths</th>
+                        <th>Total Deaths</th>
+                        <th>New Recovered</th>
+                        <th>Total Recovered</th>
+                        <th>Last Updated</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            <hr>
+        </div>
+    <!-- End Table Block -->
+</body>
+</html>
