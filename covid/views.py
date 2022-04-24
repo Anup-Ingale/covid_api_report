@@ -27,3 +27,7 @@ def reports_display(request):
     except Exception as e :
         print(e)
         return render(request, 'reports.html')
+
+
+def graphical_display(request):
+    return render(request, 'graphical.html')
